@@ -1,10 +1,24 @@
 /*
+    This code passes only 6/12 tests because it is not optimized and it goes over the time limit.
+    n can be 10^5 cities, so I'm guessing that's the problem. To optimize, I think I could probably
+    replace the ArrayLists with int[], and implement my own "containsAll" and "removeAll" methods.
+
+    The time complexity currently is at least O(n^3). The embedded while() loop has 2 searches,
+    if these were replaced with a different data structure then the time complexity could easily
+    be lowered down to O(n^2).
+
+ */
+
+
+
+
+/*
 Determine the minimum cost to provide library access to all citizens of HackerLand.
 There are  cities numbered from  to . Currently there are no libraries and the cities are not connected.
 Bidirectional roads may be built between any city pair listed in . A citizen has access to a library if:
 
 Their city contains a library.
-They can travel by road from their city to a city containing a library.   
+They can travel by road from their city to a city containing a library.
  */
 
 
@@ -120,64 +134,4 @@ public class Main {
         System.out.println("Roads: " + minRoads);
         System.out.println("Libraries: " + minLibraries);
     }
-
-
-
-
-    public static List<List<Integer>> findClusters(List<List<Integer>> allCities){
-        List<List<Integer>> remaining = new ArrayList<>(allCities);
-        List<List<Integer>> clusters = new ArrayList<>();
-
-
-
-        while(remaining.size() != 0) {
-
-            // Initialize new cluster,
-            // currentCities is a list of cities in this cluster.
-            List<Integer> currentCities = new ArrayList<>(remaining.get(0));
-            remaining.remove(0);
-
-
-
-            // Go through roads, if one city is in the current cluster
-            // then add the other city in. Remove the road from remaining.
-            int index = 0;
-            while(index != remaining.size()){
-                List<Integer>road = remaining.get(index);
-
-
-                // A city is in the current cluster
-                if(currentCities.contains(road.get(0))){
-                    if(!currentCities.contains(road.get(1)))
-                        currentCities.add(road.get(1));
-                    remaining.remove(road);
-                    index = 0;
-                }
-                else if(currentCities.contains(road.get(1))){
-                    if(!currentCities.contains(road.get(0)))
-                        currentCities.add(road.get(0));
-                    remaining.remove(road);
-                    index = 0;
-                }
-
-
-                // Neither city in current cluster, move on to next road.
-                else{
-                    index++;
-                }
-
-
-            }// end inner while loop
-
-            // The current cluster is finished, add it to the clusters list.
-            // If there are road still in remaining, continue with the next cluster.
-            clusters.add(currentCities);
-
-
-        } // end outer while loop.
-        // Once reached here, there are no remaining roads and clusters have been filled.
-
-
-        return clusters;
-    }// end findClusters method
 }
