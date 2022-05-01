@@ -4,7 +4,7 @@ There are  cities numbered from  to . Currently there are no libraries and the c
 Bidirectional roads may be built between any city pair listed in . A citizen has access to a library if:
 
 Their city contains a library.
-They can travel by road from their city to a city containing a library.
+They can travel by road from their city to a city containing a library.   
  */
 
 
